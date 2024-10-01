@@ -20,30 +20,44 @@ class HomePage extends StatelessWidget {
         return categoryController.loading.value == true
             ? const CircularProgressIndicator()
             : GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                 ),
                 itemCount: categoryController.listOfCategories.length,
                 itemBuilder: (contect, index) {
-                  return Stack(
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 200,
-                        child: Image.network(((categoryController
-                                    .listOfCategories[index] as Category)
-                                .strCategoryThumb)
-                            .toString()),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Text((categoryController.listOfCategories[index]
+                  return InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/second_page', arguments: {
+                        'title': (categoryController.listOfCategories[index]
                                 as Category)
                             .strCategory
-                            .toString()),
-                      )
-                    ],
+                            .toString(),
+                        'image': ((categoryController.listOfCategories[index]
+                                    as Category)
+                                .strCategoryThumb)
+                            .toString(),
+                      });
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 200,
+                          height: 200,
+                          child: Image.network(((categoryController
+                                      .listOfCategories[index] as Category)
+                                  .strCategoryThumb)
+                              .toString()),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Text((categoryController
+                                  .listOfCategories[index] as Category)
+                              .strCategory
+                              .toString()),
+                        )
+                      ],
+                    ),
                   );
                 });
       }),
